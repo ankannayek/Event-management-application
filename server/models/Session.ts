@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document } from "mongoose";
 
-export interface ISession extends Document {
+export interface ISession {
+  _id: string;
   eventId: mongoose.Types.ObjectId;
   title: string;
   speakerName: string;

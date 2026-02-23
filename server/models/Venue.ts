@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document } from "mongoose";
 
-export interface IVenue extends Document {
+export interface IVenue {
+  _id: string;
   name: string;
   address: string;
   city: string;

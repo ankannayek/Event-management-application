@@ -28,12 +28,12 @@ app.get("/", (req, res) => {
 });
 
 // Import routes
-import authRoutes from "./routes/auth";
-import userRoutes from "./routes/users";
-import eventRoutes from "./routes/events";
-import venueRoutes from "./routes/venues";
-import reportRoutes from "./routes/reports";
-import registrationRoutes from "./routes/registrations";
+import authRoutes from "./routes/auth.route";
+import userRoutes from "./routes/users.route";
+import eventRoutes from "./routes/events.route";
+import venueRoutes from "./routes/venues.route";
+import reportRoutes from "./routes/reports.route";
+import registrationRoutes from "./routes/registrations.route";
 
 // Use routes
 app.use("/api/auth", authRoutes);

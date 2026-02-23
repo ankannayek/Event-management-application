@@ -1,9 +1,9 @@
 import express from "express";
-import { getEvents, getEventById, createEvent, updateEvent, deleteEvent, getSessionsByEvent, addSession, updateSession, deleteSession } from "../controller/events";
+import { getEvents, getEventById, createEvent, updateEvent, deleteEvent, getSessionsByEvent, addSession, updateSession, deleteSession } from "../controller/events.controller";
 import { authenticate, authorize } from "../middleware/auth";
-import { getAttendeesByEvent, registerForEvent } from "../controller/registrations";
-import { getSponsorsByEvent, addSponsorshipPackage, updateSponsor, removeSponsor, uploadSponsorAssets } from "../controller/sponsors";
-import { getExhibitorsByEvent, addExhibitor, updateExhibitor, removeExhibitor } from "../controller/exhibitors";
+import { getAttendeesByEvent, registerForEvent } from "../controller/registrations.controller";
+import { getSponsorsByEvent, addSponsorshipPackage, updateSponsor, removeSponsor, uploadSponsorAssets } from "../controller/sponsors.controller";
+import { getExhibitorsByEvent, addExhibitor, updateExhibitor, removeExhibitor } from "../controller/exhibitors.controller";
 
 const router = express.Router();
 

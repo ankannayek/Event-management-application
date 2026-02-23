@@ -2,6 +2,7 @@ import mongoose, { Schema } from "mongoose";
 import bcrypt from "bcryptjs";
 
 export interface IUser {
+  _id: string;
   name: string;
   email: string;
   password?: string;
@@ -11,7 +12,7 @@ export interface IUser {
   comparePassword(password: string): Promise<boolean>;
 }
 
-const UserSchema: Schema<IUser> = new Schema({
+const UserSchema: Schema = new Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true, select: false },

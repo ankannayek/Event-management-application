@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document } from "mongoose";
 
-export interface ISponsor extends Document {
+export interface ISponsor {
+  _id: string;
   eventId: mongoose.Types.ObjectId;
   userId: mongoose.Types.ObjectId;
   companyName: string;
