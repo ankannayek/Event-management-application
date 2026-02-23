@@ -16,7 +16,7 @@ export const getEvents = async (req: Request, res: Response) => {
 
 export const getEventById = async (req: Request, res: Response) => {
   try {
-    const event = await Event.findById(req.params.id).populate("venue").populate("organizerId", "name email");
+    const event = await Event.findById(req.params.id).populate("venue").populate("organizerId", "name email mobileNumber");
     if (!event) return res.status(404).json({ message: "Event not found" });
     res.json(event);
   } catch (error: any) {

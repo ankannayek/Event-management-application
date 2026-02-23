@@ -1,5 +1,5 @@
 import express from "express";
-import { getUsers, getUserById, updateUser, deleteUser } from "../controller/users..controller";
+import { getUsers, getUserById, updateUser, deleteUser } from "../controller/users.controller";
 import { authenticate, authorize } from "../middleware/auth";
 import { getUserTickets } from "../controller/registrations.controller";
 

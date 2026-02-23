@@ -3,7 +3,7 @@ import Registration from "../models/Registration";
 import Event from "../models/Event";
 import { AuthRequest } from "../middleware/auth";
 
-export const registerForEvent = async (req: AuthRequest, res: Response) => {
+export const  registerForEvent = async (req: AuthRequest, res: Response) => {
   try {
     const event = await Event.findById(req.params.id);
     if (!event) return res.status(404).json({ message: "Event not found" });
