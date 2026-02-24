@@ -11,6 +11,7 @@ function Navbar() {
     const dispatch = useDispatch()
     const location = useLocation()
     const authorization = useSelector((state: RootState) => state.user.authorization)
+    const localUser = useSelector((state: RootState) => state.user.data)
     //console.log(authorization)
 
 
@@ -28,6 +29,13 @@ function Navbar() {
             : 'hover:text-black'
     }
 
+    const getDashboardLink = () => {
+        if (localUser.role == 'organizer') {
+            return '/organizer'
+        } else if (localUser.role == 'attendee') {
+            return '/dashboard'
+        }
+    }
 
     return (
         <header className='z-20 sticky top-4 w-full flex  justify-center bg-transparent backdrop-blur-md px-2 sm:px-10 '>
@@ -39,7 +47,10 @@ function Navbar() {
                 </div>
                 <div className='font-normal text-gray-500 links text-lg h-full sm:flex hidden items-center'>
                     <ul className='gap-8 flex'>
-                        <li><Link to='/dashboard' className={getLinkClass('/dashboard')}>Dashboard</Link></li>
+                        {(localUser?.role == 'organizer' || localUser?.role == 'attendee') &&
+                            <li><Link to={getDashboardLink() || ''} className={getLinkClass('/dashboard')}>Dashboard</Link></li>
+                        }
+
                         <li><Link to='/events' className={getLinkClass('/events')}>Events</Link></li>
                         <li><Link to='/exhibitor' className={getLinkClass('/exhibitor')}>Exhibitor</Link></li>
                         <li><Link to='/sponsor' className={getLinkClass('/sponsor')}>Sponsor</Link></li>
@@ -64,7 +75,7 @@ function Navbar() {
                     )}
                 </div>
                 <div className=" small-dd sm:hidden block">
-                    <Drawer authorization={authorization as string} handleLogout={handleLogout} />
+                    <Drawer authorization={authorization as string} handleLogout={handleLogout} localUser={localUser} />
                 </div>
                 <div className='trans-border absolute bottom-0 w-full h-px
                   bg-linear-to-r from-transparent via-orange-400 to-transparent'></div>

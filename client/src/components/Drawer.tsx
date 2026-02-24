@@ -1,15 +1,18 @@
 import { useState } from 'react';
 import DropOn from '../assets/dropdown-on.svg';
 import { Link, useLocation } from 'react-router-dom';
+import type { userStateType } from '@/redux/userSlice';
 
 interface DrawerProps {
     authorization: string;
+    localUser:userStateType;
     handleLogout: () => void;
 }
 
 export default function Drawer({
     authorization,
-    handleLogout,
+    localUser,
+    handleLogout
 }: DrawerProps) {
     const [isOpen, setIsOpen] = useState(false);
     const location = useLocation();
@@ -20,6 +23,14 @@ export default function Drawer({
             : 'hover:text-black'
     }
 
+
+    const getDashboardLink=()=>{
+        if(localUser.role=='organizer'){
+            return '/organizer'
+        }else if(localUser.role=='attendee'){
+            return '/dashboard'
+        }
+    }
 
     return (
         <div className=''>
@@ -41,11 +52,19 @@ export default function Drawer({
   ${isOpen ? 'translate-x-0' : 'translate-x-full hidden pointer-events-none'}`}
             >
                 <div className="ml-3 p-3 mt-20 font-medium text-xl ">
-                    <Link to="/dashboard" className={getLinkClass('/dashboard')}>Dashboard</Link>
+                    <Link to={getDashboardLink() || ''} className={getLinkClass('/dashboard')}>Dashboard</Link>
                 </div>
 
                 <div className="ml-3 p-3 font-medium text-xl">
                     <Link to="/events" className={getLinkClass('/events')}>Events</Link>
+                </div>
+
+                <div className="ml-3 p-3 font-medium text-xl">
+                    <Link to="/exhibitor" className={getLinkClass('/exhibitor')}>Exhibitor</Link>
+                </div>
+
+                <div className="ml-3 p-3 font-medium text-xl">
+                    <Link to="/sponsor" className={getLinkClass('/sponsor')}>Sponsor</Link>
                 </div>
 
 

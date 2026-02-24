@@ -173,7 +173,6 @@ const Signup: React.FC = () => {
                             value={userType}
                             onChange={(e) => setUserType(e.target.value as UserType)}
                         >
-                            <option value="admin">Admin</option>
                             <option value="organizer">Organizer</option>
                             <option value="attendee">Attendee</option>
                             <option value="exhibitor">Exhibitor</option>
