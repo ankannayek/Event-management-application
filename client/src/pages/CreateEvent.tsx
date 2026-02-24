@@ -175,7 +175,7 @@ const CreateEvent: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
+    <div className="min-h-screen bg-amber-50 p-8">
       <div className="max-w-3xl mx-auto bg-white shadow-md rounded-2xl p-8 border border-gray-200">
         <h1 className="text-2xl font-bold mb-6 text-orange-400">
           Create New Event

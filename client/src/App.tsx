@@ -94,6 +94,49 @@ function App() {
               element={<Profile />}
             />
           </Route>
+          <Route
+            path="exhibitor/profile"
+            element={<ExhibitorProfile />}
+          />
+
+          <Route
+            path="sponsor"
+            element={<SponsorDashboard />}
+          />
+          <Route
+            path="sponsor/profile"
+            element={<SponsorProfile />}
+          />
+
+          <Route
+            path="dashboard"
+            element={<Dashboard />}
+          />
+
+          <Route
+            path="organizer"
+            element={<Organizer />}
+          />
+          <Route
+            path="organizer/events/create"
+            element={<CreateEvent />}
+          />
+          <Route
+            path="organizer/events/:eventId/edit"
+            element={<EditEvent />}
+          />
+          <Route
+            path="organizer/events/:eventId/attendees"
+            element={<ManageAttendee />}
+          />
+          <Route
+            path="organizer/events/:eventId/venue"
+            element={<ManageVenue />}
+          />
+          <Route
+            path="organizer/events/:eventId/sponsors"
+            element={<ManageSponsors />}
+          />
 
 
           <Route

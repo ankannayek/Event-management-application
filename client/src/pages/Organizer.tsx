@@ -1,5 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { type RootState } from "../redux/store";
+import { toast } from "sonner";
+
+interface EventType {
+    _id: string;
+    title: string;
+    type: string;
+    startDate: string;
+    endDate: string;
+    venue?: {
+        name: string;
+    };
+    maxCapacity: number;
+    ticketPrice: number;
+}
 
 const OrganizerDashboard: React.FC = () => {
   const navigate = useNavigate();
@@ -145,9 +162,8 @@ const OrganizerDashboard: React.FC = () => {
                   onClick={() => navigate(`/organizer/events/${event._id}/venue`)}
                   className="px-4 py-2 bg-gray-200 rounded-lg text-sm"
                 >
-                  Venue
+                    + Create New Event
                 </button>
-              </div>
             </div>
           );
         })}
@@ -177,11 +193,122 @@ const OrganizerDashboard: React.FC = () => {
                 View
               </button>
             </div>
-          ))
-        )}
-      </div>
-    </div>
-  );
+
+
+            <div className="space-y-6">
+                <h2 className="text-xl font-semibold">Manage Events</h2>
+
+                {upcomingEvents.length === 0 ? (
+                    <p className="text-gray-500">No upcoming events</p>
+                ) : (
+                    upcomingEvents.map((event) => (
+                        <div
+                            key={event._id}
+                            className="bg-white rounded-2xl shadow-md p-6"
+                        >
+                            <div className="flex justify-between items-center">
+                                <div>
+                                    <h3 className="font-semibold text-lg">
+                                        {event.title}
+                                    </h3>
+                                    <p className="text-sm text-gray-500">
+                                        {new Date(event.startDate).toDateString()} -{" "}
+                                        {new Date(event.endDate).toDateString()}
+                                    </p>
+                                    <p className="text-xs text-gray-400">
+                                        Venue: {event.venue?.name || "N/A"}
+                                    </p>
+                                </div>
+
+                                <span className="text-xs px-3 py-1 bg-orange-100 text-orange-600 rounded-full">
+                                    {getStatus(event.startDate, event.endDate)}
+                                </span>
+                            </div>
+
+                            <div className="mt-4 flex flex-wrap gap-3">
+                                <button
+                                    onClick={() =>
+                                        navigate(`/organizer/events/${event._id}/edit`)
+                                    }
+                                    className="cursor-pointer px-4 py-2 bg-black text-white rounded-lg text-sm"
+                                >
+                                    Edit Event
+                                </button>
+
+                                <button
+                                    onClick={() =>
+                                        navigate(`/organizer/events/${event._id}/attendees`)
+                                    }
+                                    className="cursor-pointer px-4 py-2 bg-gray-200 rounded-lg text-sm"
+                                >
+                                    Manage Attendees
+                                </button>
+
+                                <button
+                                    onClick={() =>
+                                        navigate(`/organizer/events/${event._id}/sponsors`)
+                                    }
+                                    className="cursor-pointer px-4 py-2 bg-gray-200 rounded-lg text-sm"
+                                >
+                                    Manage Sponsors
+                                </button>
+
+                                {/* <button
+                                    onClick={() =>
+                                        navigate(`/organizer/exhibitors/${event._id}`)
+                                    }
+                                    className="px-4 py-2 bg-gray-200 rounded-lg text-sm"
+                                >
+                                    Manage Exhibitors
+                                </button> */}
+
+                                <button
+                                    onClick={() =>
+                                        navigate(`/organizer/events/${event._id}/venue`)
+                                    }
+                                    className="cursor-pointer px-4 py-2 bg-gray-200 rounded-lg text-sm"
+                                >
+                                    Edit Venue
+                                </button>
+                            </div>
+                        </div>
+                    ))
+                )}
+            </div>
+
+
+            <div className="bg-white rounded-2xl shadow-md p-6">
+                <h2 className="text-xl font-semibold mb-4">Past Events</h2>
+
+                {pastEvents.length === 0 ? (
+                    <p className="text-gray-500 text-sm">No past events</p>
+                ) : (
+                    pastEvents.map((event) => (
+                        <div
+                            key={event._id}
+                            className="flex justify-between border-b pb-3 mb-3"
+                        >
+                            <div>
+                                <p className="font-medium">{event.title}</p>
+                                <p className="text-xs text-gray-500">
+                                    {new Date(event.startDate).toDateString()}
+                                </p>
+                            </div>
+
+                            <button
+                                onClick={() =>
+                                    navigate(`/organizer/events/${event._id}/edit`)
+                                }
+                                className="text-sm text-orange-500 hover:underline"
+                            >
+                                View
+                            </button>
+                        </div>
+                    ))
+                )}
+            </div>
+        </div>
+    );
 };
 
 export default OrganizerDashboard;
