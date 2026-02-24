@@ -26,7 +26,6 @@ function App() {
           <Route path='events' element={<Events />} />
           <Route path='event/:eventId' element={<EventDetails />} />
 
-          {/* 🔒 Exhibitor Protected Routes */}
           <Route
             path='exhibitor'
             element={
@@ -54,7 +53,6 @@ function App() {
             }
           />
 
-          {/* 🔒 Sponsor Protected Routes */}
           <Route
             path='sponsor'
             element={
