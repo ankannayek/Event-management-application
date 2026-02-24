@@ -5,6 +5,7 @@ import { toast } from 'sonner';
 import { useDispatch } from 'react-redux';
 import { add } from '../redux/userSlice';
 
+
 const Signup: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
