@@ -2,9 +2,7 @@ const ExhibitorProfile = () => {
   return (
     <div className="min-h-screen bg-[#DDD9C8] p-8">
       <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8">
-        <h1 className="text-3xl font-bold mb-6 text-gray-800">
-          Company Profile
-        </h1>
+        <h1 className="text-3xl font-bold mb-6 text-gray-800">Company Profile</h1>
 
         <div className="grid md:grid-cols-2 gap-6">
           {/* Company Name */}
@@ -68,9 +66,7 @@ const ExhibitorProfile = () => {
         </div>
 
         <div className="mt-8 text-right">
-          <button className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition">
-            Update Profile
-          </button>
+          <button className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition">Update Profile</button>
         </div>
       </div>
     </div>

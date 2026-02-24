@@ -21,6 +21,7 @@ import EditEvent from "./pages/EditEvent";
 import ManageAttendee from "./pages/ManageAttendee";
 import ManageVenue from "./pages/ManageVenue";
 import ManageSponsors from "./pages/ManageSponsors";
+import ManageExhibitors from "./pages/ManageExhibitors";
 import Organizer from "./pages/Organizer";
 
 function App() {
@@ -67,24 +68,6 @@ function App() {
             element={
               <ProtectedRoute allowedRoles={["exhibitor"]}>
                 <ExhibitorProfile />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path="sponsor"
-            element={
-              <ProtectedRoute allowedRoles={["sponsor"]}>
-                <SponsorDashboard />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path="sponsor/profile"
-            element={
-              <ProtectedRoute allowedRoles={["sponsor"]}>
-                <SponsorProfile />
               </ProtectedRoute>
             }
           />
@@ -155,11 +138,49 @@ function App() {
             element={<ManageSponsors />}
           />
 
+
+          <Route
+            path="organizer"
+            element={<Organizer />}
+          />
+          <Route
+            path="organizer/events/create"
+            element={<CreateEvent />}
+          />
+          <Route
+            path="organizer/events/:eventId/edit"
+            element={<EditEvent />}
+          />
+          <Route
+            path="organizer/events/:eventId/attendees"
+            element={<ManageAttendee />}
+          />
+          <Route
+            path="organizer/events/:eventId/venue"
+            element={<ManageVenue />}
+          />
+          <Route
+            path="organizer/events/:eventId/sponsors"
+            element={<ManageSponsors />}
+          />
+          <Route
+            path="organizer/events/:eventId/exhibitors"
+            element={<ManageExhibitors />}
+          />
+
           <Route
             path="*"
             element={<NotFound />}
           />
         </Route>
+        <Route
+          path="sponsor"
+          element={<SponsorDashboard />}
+        />
+        <Route
+          path="sponsor/profile"
+          element={<SponsorProfile />}
+        />
 
         <Route
           path="signup"

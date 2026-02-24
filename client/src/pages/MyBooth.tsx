@@ -6,9 +6,7 @@ const MyBooth = () => {
   return (
     <div className="min-h-screen bg-[#DDD9C8] p-8">
       <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8">
-        <h1 className="text-3xl font-bold mb-6 text-gray-800">
-          Manage Booth #{id}
-        </h1>
+        <h1 className="text-3xl font-bold mb-6 text-gray-800">Manage Booth #{id}</h1>
 
         <div className="grid md:grid-cols-2 gap-6">
           {/* Booth Name */}
@@ -52,9 +50,7 @@ const MyBooth = () => {
         </div>
 
         <div className="mt-8 text-right">
-          <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
-            Save Changes
-          </button>
+          <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">Save Changes</button>
         </div>
       </div>
     </div>
