@@ -72,10 +72,6 @@ export const cancelRegistration = async (req: AuthRequest, res: Response) => {
     const registration = await Registration.findById(req.params.id);
     if (!registration) return res.status(404).json({ message: "Registration not found" });
 
-    if (registration.userId.toString() !== req.user?._id.toString() && req.user?.role !== "admin") {
-      return res.status(403).json({ message: "Access denied" });
-    }
-
     registration.status = "cancelled";
     await registration.save();
     res.json({ message: "Registration cancelled successfully" });

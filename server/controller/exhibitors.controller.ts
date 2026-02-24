@@ -5,7 +5,19 @@ import { AuthRequest } from "../middleware/auth";
 
 export const getExhibitorsByEvent = async (req: Request, res: Response) => {
   try {
-    const exhibitors = await Exhibitor.find({ eventId: req.params.id, status: "confirmed" });
+    const event = await Event.findById(req.params.id);
+    const authReq = req as AuthRequest;
+
+    // If organizer or admin, show all (including pending registered)
+    const isOrganizer = authReq.user && event?.organizerId.toString() === authReq.user?._id.toString();
+    const isAdmin = authReq.user?.role === "admin";
+
+    const filter: any = { eventId: req.params.id };
+    if (!isOrganizer && !isAdmin) {
+      filter.status = "confirmed";
+    }
+
+    const exhibitors = await Exhibitor.find(filter);
     res.json(exhibitors);
   } catch (error: any) {
     res.status(500).json({ message: error.message });
@@ -68,6 +80,44 @@ export const removeExhibitor = async (req: AuthRequest, res: Response) => {
 
     await Exhibitor.findByIdAndDelete(req.params.eid);
     res.json({ message: "Exhibitor removed successfully" });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const applyToExhibitor = async (req: AuthRequest, res: Response) => {
+  try {
+    const { eventId, companyName, boothSize, description } = req.body;
+    const userId = req.user?._id;
+
+    // Check if already applied
+    const existing = await Exhibitor.findOne({ eventId, userId });
+    if (existing) {
+      return res.status(400).json({ message: "You have already applied as an exhibitor for this event" });
+    }
+
+    const exhibitor = new Exhibitor({
+      eventId,
+      userId,
+      companyName,
+      boothSize,
+      description,
+      boothNumber: "Pending", // Will be assigned by organizer
+      status: "registered",
+    });
+
+    await exhibitor.save();
+    res.status(201).json(exhibitor);
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const getExhibitorByUserId = async (req: AuthRequest, res: Response) => {
+  try {
+    const userId = req.params.id || req.user?._id;
+    const exhibitors = await Exhibitor.find({ userId }).populate("eventId");
+    res.json(exhibitors);
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }

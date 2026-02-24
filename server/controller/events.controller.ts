@@ -22,6 +22,14 @@ export const getEventById = async (req: Request, res: Response) => {
     if (!event) return res.status(404).json({ message: "Event not found" });
     const sponsors = await Sponsor.find({
       eventId: req.params.id,
+      status: "active",
+    })
+      .populate("userId", "name email companyName logoUrl")
+      .lean();
+
+    const exhibitors = await Exhibitor.find({
+      eventId: req.params.id,
+      status: "confirmed",
     })
       .populate("userId", "name email companyName logoUrl")
       .lean();
@@ -29,6 +37,7 @@ export const getEventById = async (req: Request, res: Response) => {
     return res.json({
       event,
       sponsors,
+      exhibitors,
     });
   } catch (error: any) {
     res.status(500).json({ message: error.message });

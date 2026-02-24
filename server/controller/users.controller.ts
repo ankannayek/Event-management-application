@@ -29,7 +29,7 @@ export const getUserById = async (req: AuthRequest, res: Response) => {
 
 export const updateUser = async (req: AuthRequest, res: Response) => {
   try {
-    const { name, email, role } = req.body;
+    const { name, email, role, companyName, websiteUrl, logoUrl, bio } = req.body;
 
     // Check if admin or self
     if (req.user?.role !== "admin" && req.user?._id.toString() !== req.params.id) {
@@ -41,6 +41,11 @@ export const updateUser = async (req: AuthRequest, res: Response) => {
 
     user.name = name || user.name;
     user.email = email || user.email;
+    user.companyName = companyName !== undefined ? companyName : user.companyName;
+    user.websiteUrl = websiteUrl !== undefined ? websiteUrl : user.websiteUrl;
+    user.logoUrl = logoUrl !== undefined ? logoUrl : user.logoUrl;
+    user.bio = bio !== undefined ? bio : user.bio;
+
     if (req.user?.role === "admin" && role) {
       user.role = role;
     }
