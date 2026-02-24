@@ -26,6 +26,7 @@ const EventDetails = () => {
     const [registering, setRegistering] = useState(false)
     const [error, setError] = useState('')
     const [eventData, setEventData] = useState<IEvent | null>({})
+    const [sponsors, setSponsors] = useState([])
 
 
 
@@ -34,7 +35,8 @@ const EventDetails = () => {
             try {
                 setLoading(true)
                 const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/events/${eventId}`)
-                setEventData(res.data)
+                setEventData(res.data.event)
+                setSponsors(res.data.sponsors)
                 console.log(res.data)
             } catch (error: any) {
                 console.log(error?.response?.data?.message || error?.message);
