@@ -138,11 +138,7 @@ function App() {
             element={<ManageSponsors />}
           />
 
-
-          <Route
-            path="organizer"
-            element={<Organizer />}
-          />
+          
           <Route
             path="organizer/events/create"
             element={<CreateEvent />}
