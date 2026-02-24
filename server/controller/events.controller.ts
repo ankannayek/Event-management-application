@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import Event from "../models/Event";
 import Session from "../models/Session";
+import Sponsor from "../models/Sponsor";
+import Exhibitor from "../models/Exhibitor";
 import { AuthRequest } from "../middleware/auth";
 
 // --- Event Controllers ---
@@ -16,9 +18,18 @@ export const getEvents = async (req: Request, res: Response) => {
 
 export const getEventById = async (req: Request, res: Response) => {
   try {
-    const event = await Event.findById(req.params.id).populate("venue").populate("organizerId", "name email mobileNumber");
+    const event = await Event.findById(req.params.id).populate("venue").populate("organizerId", "name email mobileNumber").lean();
     if (!event) return res.status(404).json({ message: "Event not found" });
-    res.json(event);
+    const sponsors = await Sponsor.find({
+      eventId: req.params.id,
+    })
+      .populate("userId", "name email companyName logoUrl")
+      .lean();
+
+    return res.json({
+      event,
+      sponsors,
+    });
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }

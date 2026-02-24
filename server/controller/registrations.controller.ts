@@ -8,10 +8,6 @@ export const  registerForEvent = async (req: AuthRequest, res: Response) => {
     const event = await Event.findById(req.params.id);
     if (!event) return res.status(404).json({ message: "Event not found" });
 
-    if (event.status !== "published") {
-      return res.status(400).json({ message: "Registration is only allowed for published events" });
-    }
-
     // Check capacity
     const currentAttendees = await Registration.countDocuments({ eventId: req.params.id, status: "active" });
     if (currentAttendees >= event.maxCapacity) {
@@ -22,7 +18,6 @@ export const  registerForEvent = async (req: AuthRequest, res: Response) => {
     const existingRegistration = await Registration.findOne({
       eventId: req.params.id,
       userId: req.user?._id,
-      status: "active",
     });
     if (existingRegistration) {
       return res.status(400).json({ message: "You are already registered for this event" });
