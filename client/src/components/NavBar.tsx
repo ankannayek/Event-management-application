@@ -41,6 +41,8 @@ function Navbar() {
                     <ul className='gap-8 flex'>
                         <li><Link to='/dashboard' className={getLinkClass('/dashboard')}>Dashboard</Link></li>
                         <li><Link to='/events' className={getLinkClass('/events')}>Events</Link></li>
+                        <li><Link to='/exhibitor' className={getLinkClass('/exhibitor')}>Exhibitor</Link></li>
+                        <li><Link to='/sponsor' className={getLinkClass('/sponsor')}>Sponsor</Link></li>
                     </ul>
 
 

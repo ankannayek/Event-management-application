@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Loading from '../components/Loading';
@@ -11,14 +11,19 @@ import { FaHeart } from "react-icons/fa";
 import { GiLoveSong } from "react-icons/gi";
 import { ImOffice } from "react-icons/im";
 import { MdEventAvailable } from "react-icons/md";
-
+import { type RootState } from "../redux/store";
 
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useSelector } from 'react-redux';
+import { toast } from 'sonner';
 
 const EventDetails = () => {
     const { eventId } = useParams()
+    const user = useSelector((state: RootState) => state.user)
+    const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
+    const [registering, setRegistering] = useState(false)
     const [error, setError] = useState('')
     const [eventData, setEventData] = useState<IEvent | null>({})
 
@@ -31,7 +36,7 @@ const EventDetails = () => {
                 const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/events/${eventId}`)
                 setEventData(res.data)
                 console.log(res.data)
-            } catch (error:any) {
+            } catch (error: any) {
                 console.log(error?.response?.data?.message || error?.message);
                 setError('Failed to fetch event data')
             } finally {
@@ -42,6 +47,39 @@ const EventDetails = () => {
         getEvent()
     }, [])
 
+    async function handleBook() {
+        if (!user.authorization) {
+            toast.error('Login to continue')
+            navigate('/login')
+        } else {
+            try {
+                setRegistering(true)
+                const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/events/${eventId}/register`,
+                    { ticketType: 'general' },
+                    {
+                        headers: {
+                            'Authorization': `Bearer ${user.authorization}`,
+                            'Content-Type': 'application/json'
+                        }
+                    }
+                )
+
+                console.log(res?.data)
+                if (res.status == 201) {
+                    toast.success('Successfully registered for event')
+                    navigate('/dashboard')
+                }
+
+
+
+            } catch (error) {
+                toast.error('Event registration failed!')
+                console.log(error)
+            } finally {
+                setRegistering(false)
+            }
+        }
+    }
 
     if (error) {
         return <div className='wrapper min-h-[80vh] px-4'>
@@ -72,25 +110,25 @@ const EventDetails = () => {
                         <FcConferenceCall size={50} />
                     }
                     {eventData?.type == 'wedding' &&
-                        <FaHeart size={50}/>
+                        <FaHeart size={50} />
                     }
                     {eventData?.type == 'concert' &&
-                        <GiLoveSong size={50}/>
+                        <GiLoveSong size={50} />
                     }
                     {eventData?.type == 'corporate' &&
-                        <ImOffice size={50}/>
+                        <ImOffice size={50} />
                     }
-                     {eventData?.type == 'other' &&
-                        <MdEventAvailable size={50}/>
+                    {eventData?.type == 'other' &&
+                        <MdEventAvailable size={50} />
                     }
                 </div>
 
             </div>
 
-            <div className="second grid grid-cols-1 sm:grid-cols-2 mt-10 p-5 gap-3">
+            <div className="second grid grid-cols-1 sm:grid-cols-2 mt-10 p-1 sm:p-5 gap-3">
                 <div className="left  p-5 space-y-5">
-                    <h1 className='text-3xl max-w-xs '>{eventData?.title}</h1>
-                    <h1 className='text-2xl text-gray-600'>{eventData?.description}</h1>
+                    <h1 className='text-2xl sm:text-3xl max-w-xs '>{eventData?.title}</h1>
+                    <h1 className='text-xl sm:text-2xl text-gray-600'>{eventData?.description}</h1>
 
                     <div className="contacts grid grid-cols-1 lg:grid-cols-2 gap-2">
                         <div className="call flex items-center gap-2">
@@ -105,8 +143,9 @@ const EventDetails = () => {
 
                     <h1 className='text-3xl '>₹{eventData?.ticketPrice}</h1>
                     <button
-                        className='bg-orange-400 text-white px-3 py-2 rounded-md cursor-pointer w-full hover:scale-105 transition transform duration-200 font-semibold'
-                    >Book now</button>
+                        onClick={handleBook}
+                        className={`${registering ? 'bg-orange-600' : 'bg-orange-400'} text-white px-3 py-2 rounded-md cursor-pointer w-full hover:scale-105 transition transform duration-200 font-semibold`}
+                    >{registering ? 'Booking...' : 'Book now'}</button>
                 </div>
                 <div className="right border-3 rounded-lg p-3">
                     <Tabs defaultValue="about" className="w-full mt-5">

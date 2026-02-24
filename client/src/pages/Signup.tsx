@@ -28,7 +28,7 @@ const Signup: React.FC = () => {
                 name,
                 email,
                 password,
-                role:userType,
+                role: userType,
                 mobileNumber
             }
         };
@@ -44,9 +44,9 @@ const Signup: React.FC = () => {
                 } else {
                     toast.success('Registration successful!');
 
-                    const localUser={
-                        authorization:resp.token,
-                        data:resp.user
+                    const localUser = {
+                        authorization: resp.token,
+                        data: resp.user
                     }
 
                     console.log(JSON.stringify(localUser))
@@ -71,7 +71,7 @@ const Signup: React.FC = () => {
             setRegisterErr("Confirm password does not match!");
             return;
         }
-        if (!name || !email || !password || !cPassword  || !userType || !mobileNumber) {
+        if (!name || !email || !password || !cPassword || !userType || !mobileNumber) {
             setRegisterErr("Please fill all the details!");
             return;
         }
@@ -114,7 +114,7 @@ const Signup: React.FC = () => {
                         />
                     </div>
 
-                     <div>
+                    <div>
                         <label htmlFor="mobileNumber" className="block text-sm font-medium text-gray-700">
                             Mobile Number
                         </label>
@@ -124,7 +124,12 @@ const Signup: React.FC = () => {
                             className="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-200"
                             placeholder="Enter your full name"
                             value={mobileNumber}
-                            onChange={(e) => setMobileNumber(Number(e.target.value))}
+                            onChange={(e) => {
+                                if (!(e.target.value.length >10)) {
+                                    setMobileNumber(Number(e.target.value))
+                                }
+                            }
+                            }
                         />
                     </div>
 
