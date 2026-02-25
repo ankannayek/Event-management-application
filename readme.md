@@ -1,4 +1,4 @@
-🎉 Event Management System (EMS)
+###🎉 Event Management System (EMS)
 
 A full-stack Event Management System designed to manage events, attendees, exhibitors, sponsors, and administrators in a centralized and scalable platform.
 
