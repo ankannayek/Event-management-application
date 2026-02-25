@@ -1,3 +1,102 @@
+🎉 Event Management System (EMS)
+
+A full-stack Event Management System designed to manage events, attendees, exhibitors, sponsors, and administrators in a centralized and scalable platform.
+
+📌 Overview
+
+The Event Management System (EMS) helps organizers create and manage events efficiently. It provides role-based dashboards and secure authentication to ensure smooth coordination between different stakeholders.
+
+The system supports:
+
+Event creation and management
+
+User registration and authentication
+
+Ticket management with QR codes
+
+Exhibitor and sponsor coordination
+
+Admin monitoring and reporting
+
+🚀 Features
+👤 User Authentication
+
+Secure registration and login
+
+JWT-based authentication
+
+Role-Based Access Control (RBAC)
+
+📅 Event Management
+
+Create, update, and delete events
+
+Manage event details (venue, date, agenda)
+
+Track attendee registrations
+
+🎟 Attendee Dashboard
+
+Register for events
+
+View and download tickets
+
+QR-based ticket verification
+
+Manage profile
+
+🏢 Exhibitor Management
+
+Booth allocation
+
+Update company details
+
+Event participation tracking
+
+🤝 Sponsor Management
+
+Manage sponsorship details
+
+Upload branding assets
+
+View sponsorship packages
+
+🛠 Admin Panel
+
+Manage users
+
+Manage events
+
+View reports and analytics
+
+Monitor system performance
+
+🏗 Tech Stack
+🔹 Backend
+
+Node.js
+
+Express.js
+
+MongoDB
+
+JWT Authentication
+
+🔹 Frontend
+
+HTML
+
+CSS
+
+JavaScript
+(Optional: React.js / Bootstrap if used)
+
+🔹 Tools
+
+Git & GitHub
+
+RESTful APIs
+
 ### 3.1 Authentication
 
 | Method | Endpoint | Access | Description |
@@ -83,3 +182,29 @@
 | GET | /api/reports/revenue | Admin | Ticket revenue totals |
 
 ---
+
+🔐 User Roles
+
+Admin
+
+Organizer
+
+Attendee
+
+Exhibitor
+
+Sponsor
+
+📈 Future Enhancements
+
+Payment gateway integration
+
+Email notifications
+
+Real-time event analytics
+
+Mobile application support
+
+📄 License
+
+This project is for educational and academic purposes.
